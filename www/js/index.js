@@ -44,34 +44,13 @@ function cordovaDevice() {
               },
    headers: {
                   'Content-Type': 'application/json',
-                 'x-client-id':'1831dac3fd47d13be98b7fd11381',
-                 'x-client-secret': '4c41ca2022d1fa588efa91b73af7bb3489421735'
+                 'x-client-id':'your client id',
+                 'x-client-secret': 'your secert client id'
             }
 };
 
 console.log('CF::SDK::' +testUrl);
 console.log('CF::SDK::' +JSON.stringify(options));
-
-/* var mapNew ={"appId":"1831dac3fd47d13be98b7fd11381",
-                                   "orderId":orderIdValue,
-                                   "orderAmount":"1",
-                                   "orderNote":"Cashfree Test",
-                                   "customerName":"Cashfree",
-                                   "customerPhone":"9094395340",
-                                    "customerEmail":"arjun@cashfree.com",
-                                     "notifyUrl":"https://www.yourendpoint.com/",
-                                      "orderCurrency":"INR",
-                                      "stage":"test",
-                                      "tokenData":"uK9JCN4MzUIJiOicGbhJCLiQ1VKJiOiAXe0Jye.LG0nI5QWNwcDO5U2YjRjZ1IiOiQHbhN3XiwCN0ETM2QTMwYTM6ICc4VmIsIiUOlkI6ISej5WZyJXdDJXZkJ3biwSM6ICduV3btFkclRmcvJCLiUDNzITMiojIklkclRmcvJye.xewN8O8uPnDOgcWPxZYHfGS1zw9tiWmwX5JrrcQmIpdyq1K1VgkpNhL5VJNIth8mKl"}
-     cordova.exec(function(success) {
-               console.log('FROM Cordova'+ success);
-             },              //success callback
-             function(error) {
-                 console.log('FROM Cordova'+ error);
-             }, 
-             "PgCordovaWrapper",                      
-             "startPaymentWEB",    
-             [mapNew]); */ 
 
 
 cordova.plugin.http.setDataSerializer("json");
@@ -79,7 +58,7 @@ cordova.plugin.http.sendRequest(testUrl, options, function(response) {
   // prints 200
    var result=JSON.parse(response.data);
    console.log("CF::SDK::",result.cftoken);
-   var mapNew ={"appId":"1831dac3fd47d13be98b7fd11381",
+   var mapNew ={"appId":"your client id'",
                                    "orderId":orderIdValue,
                                    "orderAmount":"1",
                                    "orderNote":"Cashfree Test",
