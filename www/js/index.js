@@ -28,11 +28,82 @@ function onDeviceReady() {
  
 }
 
+var testUrl = "https://test.cashfree.com/api/v2/cftoken/order";
+var prodUrl = "https://api.cashfree.com/api/v2/cftoken/order";
+
 function cordovaDevice() {
-	   console.log('Inside click');
-   alert("Cordova version: " + device.cordova + "\n" +
-      "Device model: " + device.model + "\n" +
-      "Device platform: " + device.platform + "\n" +
-      "Device UUID: " + device.uuid + "\n" +
-      "Device version: " + device.version);
+	  var orderIdValue = "Order" + Math.floor(Math.random() * 100000) + 1;
+
+	  
+  const options = {
+  method: 'post',
+  data: {
+                   orderId: orderIdValue,
+                   orderAmount : 1,
+                   orderCurrency :'INR' 
+              },
+   headers: {
+                  'Content-Type': 'application/json',
+                 'x-client-id':'1831dac3fd47d13be98b7fd11381',
+                 'x-client-secret': '4c41ca2022d1fa588efa91b73af7bb3489421735'
+            }
+};
+
+console.log('CF::SDK::' +testUrl);
+console.log('CF::SDK::' +JSON.stringify(options));
+
+/* var mapNew ={"appId":"1831dac3fd47d13be98b7fd11381",
+                                   "orderId":orderIdValue,
+                                   "orderAmount":"1",
+                                   "orderNote":"Cashfree Test",
+                                   "customerName":"Cashfree",
+                                   "customerPhone":"9094395340",
+                                    "customerEmail":"arjun@cashfree.com",
+                                     "notifyUrl":"https://www.yourendpoint.com/",
+                                      "orderCurrency":"INR",
+                                      "stage":"test",
+                                      "tokenData":"uK9JCN4MzUIJiOicGbhJCLiQ1VKJiOiAXe0Jye.LG0nI5QWNwcDO5U2YjRjZ1IiOiQHbhN3XiwCN0ETM2QTMwYTM6ICc4VmIsIiUOlkI6ISej5WZyJXdDJXZkJ3biwSM6ICduV3btFkclRmcvJCLiUDNzITMiojIklkclRmcvJye.xewN8O8uPnDOgcWPxZYHfGS1zw9tiWmwX5JrrcQmIpdyq1K1VgkpNhL5VJNIth8mKl"}
+     cordova.exec(function(success) {
+               console.log('FROM Cordova'+ success);
+             },              //success callback
+             function(error) {
+                 console.log('FROM Cordova'+ error);
+             }, 
+             "PgCordovaWrapper",                      
+             "startPaymentWEB",    
+             [mapNew]); */ 
+
+
+cordova.plugin.http.setDataSerializer("json");
+cordova.plugin.http.sendRequest(testUrl, options, function(response) {
+  // prints 200
+   var result=JSON.parse(response.data);
+   console.log("CF::SDK::",result.cftoken);
+   var mapNew ={"appId":"1831dac3fd47d13be98b7fd11381",
+                                   "orderId":orderIdValue,
+                                   "orderAmount":"1",
+                                   "orderNote":"Cashfree Test",
+                                   "customerName":"Cashfree",
+                                   "customerPhone":"9094395340",
+                                    "customerEmail":"arjun@cashfree.com",
+                                     "notifyUrl":"https://www.yourendpoint.com/",
+                                      "orderCurrency":"INR",
+                                      "stage":"test",
+                                      "tokenData":result.cftoken}
+     cordova.exec(function(success) {
+             	 console.log('FROM Cordova'+ success);
+             },              //success callback
+             function(error) {
+             		 console.log('FROM Cordova'+ error);
+             }, 
+             "PgCordovaWrapper",                      
+             "startPaymentWEB",    
+             [mapNew]);                                 
+
+}, function(response) {
+  console.log(response.status);
+  console.log(response.error);
+    
+
+});
 }
